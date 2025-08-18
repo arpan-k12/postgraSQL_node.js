@@ -28,18 +28,16 @@ module.exports = sequelize.define(
       allowNull: false,
       validate: {
         isIn: {
-          arg: [[true, false]],
+          args: [[true, false]],
           msg: "isFeatured value must be true or false",
         },
       },
     },
-    productImge: {
+    productImage: {
       type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
       validate: {
-        notNull: {
-          msg: "productImge cannot be null",
-        },
+        notNull: { msg: "productImage cannot be null" },
       },
     },
     price: {
@@ -57,7 +55,7 @@ module.exports = sequelize.define(
     shortDescription: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           msg: "shortDescription cannot be null",
         },
@@ -69,7 +67,7 @@ module.exports = sequelize.define(
     description: {
       type: DataTypes.TEXT,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           msg: "description cannot be null",
         },
@@ -81,7 +79,7 @@ module.exports = sequelize.define(
     productUrl: {
       type: DataTypes.STRING,
       allowNull: false,
-      validation: {
+      validate: {
         notNull: {
           msg: "productUrl cannot be null",
         },

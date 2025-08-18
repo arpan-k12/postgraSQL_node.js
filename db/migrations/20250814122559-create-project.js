@@ -18,7 +18,7 @@ module.exports = {
         defaultValue: false,
         allowNull: false,
       },
-      productImge: {
+      productImage: {
         type: Sequelize.ARRAY(Sequelize.STRING),
         allowNull: false,
       },
@@ -46,6 +46,7 @@ module.exports = {
       },
       createdBy: {
         type: Sequelize.INTEGER,
+        allowNull: true,
         references: {
           model: "user",
           key: "id",
@@ -53,6 +54,7 @@ module.exports = {
       },
       createdAt: {
         allowNull: false,
+        allowNull: true,
         type: Sequelize.DATE,
       },
       updatedAt: {
