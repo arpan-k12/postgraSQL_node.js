@@ -101,10 +101,27 @@ const deleteProject = catchAsync(async (req, res, next) => {
   });
 });
 
+const getMyProjects = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+
+  const result = await project.findAll({
+    where: { createdBy: userId },
+  });
+
+  if (!result || result.length === 0) {
+    return next(new AppError("No projects found for this user", 404));
+  }
+  return res.json({
+    status: "success",
+    data: result,
+  });
+});
+
 module.exports = {
   createProject,
   getAllProject,
   getProjectById,
   updateProject,
   deleteProject,
+  getMyProjects,
 };

@@ -1,5 +1,5 @@
 const { authentication, restrictTo } = require("../controller/authController");
-const { getAllUser } = require("../controller/userController");
+const { getAllUser, getProfile } = require("../controller/userController");
 
 /**
  * @swagger
@@ -12,27 +12,34 @@ const { getAllUser } = require("../controller/userController");
  * @swagger
  * /user:
  *   get:
- *     summary: Get all users
+ *     summary: Get all users (Admin only)
  *     tags: [Users]
  *     responses:
  *       200:
  *         description: List of all users
- */
-
-/**
- * @swagger
- * /user/me:
- *   get:
- *     summary: Get logged-in user profile
- *     tags: [Users]
- *     responses:
- *       200:
- *         description: Current user data
+ *         content:
+ *           application/json:
+ *             example:
+ *               users:
+ *                 - id: "12345"
+ *                   firstName: "John"
+ *                   lastName: "Doe"
+ *                   email: "johndoe@example.com"
+ *                   role: "user"
+ *                 - id: "67890"
+ *                   firstName: "Jane"
+ *                   lastName: "Smith"
+ *                   email: "janesmith@example.com"
+ *                   role: "manager"
+ *       403:
+ *         description: Forbidden (Only admins allowed)
  *       401:
- *         description: Unauthorized
+ *         description: Unauthorized (Missing or invalid token)
  */
 
 const router = require("express").Router();
 router.route("/").get(authentication, restrictTo("0"), getAllUser);
+
+router.route("/me").get(authentication, getProfile);
 
 module.exports = router;

@@ -18,6 +18,22 @@ const getAllUser = catchAsync(async (req, res, next) => {
   });
 });
 
+const getProfile = catchAsync(async (req, res, next) => {
+  const userId = req.user.id;
+  const result = await user.findByPk(userId, {
+    attributes: { exclude: "password" },
+  });
+
+  if (!result) {
+    return next(new AppError("User not found", 404));
+  }
+  return res.status(200).json({
+    status: "success",
+    data: result,
+  });
+});
+
 module.exports = {
   getAllUser,
+  getProfile,
 };

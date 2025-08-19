@@ -1,5 +1,5 @@
 const { response } = require("express");
-const user = require("../db/models/user");
+const User = require("../db/models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const catchAsync = require("../utils/catchAsync");
@@ -18,7 +18,7 @@ const signup = catchAsync(async (req, res, next) => {
     throw new AppError("Invalid user Type", 400);
   }
 
-  const newUser = await user.create({
+  const newUser = await User.create({
     userType: body.userType,
     firstName: body.firstName,
     lastName: body.lastName,
@@ -53,9 +53,9 @@ const login = catchAsync(async (req, res, next) => {
     return next(new AppError("Please Provide email and password", 401));
   }
 
-  const result = await user.findOne({ where: { email } });
+  const result = await User.findOne({ where: { email } });
   if (!result || !(await bcrypt.compare(password, result.password))) {
-    return next(new AppError("Incorect email and password", 401));
+    return next(new AppError("incorrect email and password", 401));
   }
 
   const token = generateToken({
@@ -82,7 +82,7 @@ const authentication = catchAsync(async (req, res, next) => {
 
   const tokenDetail = jwt.verify(idToken, process.env.JWT_SECRET_KEY);
 
-  const freshUser = await user.findByPk(tokenDetail.id);
+  const freshUser = await User.findByPk(tokenDetail.id);
 
   if (!freshUser) {
     return next(new AppError("User no longer exists", 400));

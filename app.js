@@ -4,6 +4,7 @@ const express = require("express");
 const authRoute = require("./route/authRoute");
 const projectRoute = require("./route/projectRoute");
 const userRoute = require("./route/userRoute");
+const taskRoute = require("./route/taskRoute");
 const catchAsync = require("./utils/catchAsync");
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controller/errorController");
@@ -19,6 +20,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api/v1/auth", authRoute);
 app.use("/api/v1/projects", projectRoute);
 app.use("/api/v1/user", userRoute);
+app.use("/api/v1/task", taskRoute);
 
 app.use(
   catchAsync(async (req, res) => {

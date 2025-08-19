@@ -107,9 +107,6 @@ const user = sequelize.define(
     paranoid: true,
     freezeTableName: true,
     modelName: "user",
-    defaultScope: {
-      attributes: { exclude: ["password"] },
-    },
   }
 );
 
